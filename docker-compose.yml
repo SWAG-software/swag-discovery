@@ -1,0 +1,23 @@
+version: "2.4"
+
+services:
+# ---------------- DISCOVERY ----------------
+  swag-discovery:
+    image: swag-discovery:1.0.0
+    restart: always
+    mem_limit: 400m
+    ports:
+      - "8703:8703"
+    environment:
+      SERVER_URI: "${SERVER_URI}"
+      SPRING_PROFILE: "${SPRING_PROFILE}"
+# ---------------- GATEWAY ----------------
+  swag-gateway:
+    image: swag-gateway:1.0.0
+    restart: always
+    mem_limit: 400m
+    ports:
+      - "8282:8282"
+    environment:
+      SERVER_URI: "${SERVER_URI}"
+      SPRING_PROFILE: "${SPRING_PROFILE}"
