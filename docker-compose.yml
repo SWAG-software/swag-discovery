@@ -11,6 +11,8 @@ services:
     environment:
       SERVER_URI: "${SERVER_URI}"
       SPRING_PROFILE: "${SPRING_PROFILE}"
+    networks:
+      - swag-network
 # ---------------- GATEWAY ----------------
   swag-gateway:
     image: swag-gateway:1.0.0
@@ -21,3 +23,55 @@ services:
     environment:
       SERVER_URI: "${SERVER_URI}"
       SPRING_PROFILE: "${SPRING_PROFILE}"
+    depends_on:
+      - swag-discovery
+    networks:
+      - swag-network
+# ---------------- MICRO-SERVICIOS ----------------
+# ---------------- SWAG-MUSIC ----------------
+  swag-music:
+    image: swag-music:1.0.0
+    restart: always
+    mem_limit: 400m
+    ports:
+      - "8018:8018"
+    environment:
+      SERVER_URI: "${SERVER_URI}"
+      SPRING_PROFILE: "${SPRING_PROFILE}"
+    depends_on:
+      - swag-discovery
+    networks:
+      - swag-network
+# ---------------- SWAG-ARTIST ----------------
+  swag-artist:
+    image: swag-artist:1.0.0
+    restart: always
+    mem_limit: 400m
+    ports:
+      - "8008:8008"
+    environment:
+      SERVER_URI: "${SERVER_URI}"
+      SPRING_PROFILE: "${SPRING_PROFILE}"
+    depends_on:
+      - swag-discovery
+    networks:
+      - swag-network
+  # ---------------- SWAG-PROFILE ----------------
+  swag-profile:
+    image: swag-profile:1.0.0
+    restart: always
+    mem_limit: 400m
+    ports:
+      - "8028:8028"
+    environment:
+      SERVER_URI: "${SERVER_URI}"
+      SPRING_PROFILE: "${SPRING_PROFILE}"
+    depends_on:
+      - swag-discovery
+    networks:
+      - swag-network
+
+networks:
+  swag-network:
+    external: true
+

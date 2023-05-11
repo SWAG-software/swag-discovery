@@ -8,4 +8,4 @@ eureka:
   client:
     registerWithEureka: false
     serviceUrl:
-      defaultZone: http://localhost:8703/eureka/
+      defaultZone: http://swag-discovery:8703/eureka/
